@@ -1,0 +1,73 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="bg-white p-5 rounded shadow w-100" style="max-width: 600px;">
+    <mat-tab-group class="w-100" (selectedTabChange)="onTabChange($event)">
+      <mat-tab label="Login">
+        <h2 class="text-center mb-4 fw-bold">Login</h2>
+        <form [formGroup]="loginForm" class="w-100" (ngSubmit)="login(loginForm)">
+          <div class="mb-3">
+            <label class="form-label" for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              class="form-control"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="form-label" for="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              class="form-control"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary w-100"
+          >
+            Login
+          </button>
+        </form>
+      </mat-tab>
+      <mat-tab label="Login with PIN">
+        <h2 class="text-center mb-4 fw-bold">Login</h2>
+        <form [formGroup]="loginForm" class="w-100" (ngSubmit)="login(loginForm)">
+          <div class="mb-3">
+            <label class="form-label" for="email-pin">Email</label>
+            <input
+              id="email-pin"
+              type="email"
+              formControlName="email"
+              class="form-control"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="form-label" for="pin">PIN</label>
+            <input
+              id="pin"
+              type="password"
+              formControlName="password"
+              class="form-control"
+              placeholder="Enter your PIN"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary w-100"
+          >
+            Login
+          </button>
+        </form>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+

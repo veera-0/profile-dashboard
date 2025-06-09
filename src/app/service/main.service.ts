@@ -23,10 +23,14 @@ export class MainService {
   }
 
   get session() {
-    this.supabase.auth.getSession().then(({ data }) => {
+    this.supabase.auth.getSession().then(({ data }: { data: { session: AuthSession | null } }) => {
       this._session = data.session
     })
     return this._session
+  }
+
+  getSupabase(){
+    return this.supabase;
   }
 
   insertEducation(data: Education) {
@@ -34,34 +38,51 @@ export class MainService {
   }
 
   getEducation() {
-    return this.supabase.from('EducationData').select('*');
+    return this.supabase.from('EducationData').select('*').eq('profile_id',1);
   }
 
   getProfile() {
-    return this.supabase.from('ProfileData').select('*');
+    return this.supabase.from('profileDB').select('*');
   }
 
   updateProfile(data: Profile) {
-    return this.supabase.from('ProfileData').update(data).eq('id', data.id);
+    return this.supabase.from('profileDB').update(data).eq('id', data.id);
   }
 
   insertProfile(data: Profile) {
-    return this.supabase.from('ProfileData').insert([data]);
+    return this.supabase.from('profileDB').insert([data]);
   }
 
   getProjects() {
-    return this.supabase.from('ProjectsData').select('*');
+    return this.supabase.from('projectData').select('*');
   }
 
   insertProject(data: Project) {
-    return this.supabase.from('ProjectsData').insert([data]);
+    return this.supabase.from('projectData').insert([data]);
   }
 
   updateProject(data: Project) {
-    return this.supabase.from('ProjectsData').update(data).eq('id', data.project_id);
+    return this.supabase.from('projectData').update(data).eq('id', data.project_id);
   }
 
   deleteProject(id: number) {
-    return this.supabase.from('ProjectsData').delete().eq('id', id);
+    return this.supabase.from('projectData').delete().eq('id', id);
+  }
+
+  loginUser(email: string, password: string) {
+    return this.supabase.auth.signInWithPassword({ email, password });
+  }
+
+  loginWithPIN(email: string,pin: string) {
+    console.log('Logging in with PIN:', pin);
+    return this.supabase.from('profileDB')
+      .select('*')
+      .eq('email', email)
+      .eq('password', pin)
+      .single();
+  }
+
+  logOutUser(){
+    return this.supabase.auth.signOut();
   }
 }

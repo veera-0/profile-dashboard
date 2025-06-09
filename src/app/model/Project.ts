@@ -3,7 +3,7 @@ export interface Project {
   profile_id: number;
   projecttitle: string;
   techused: string;
-  prjectdescription: string;
+  projectdescription: string;
   project_link: string;
   created_at: string;
 }

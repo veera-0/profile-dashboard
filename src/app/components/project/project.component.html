@@ -1,1 +1,66 @@
-<p>project works!</p>
+<div class="container my-4">
+  <div class="text-white rounded-3 p-4 mb-4 text-center fs-2 fw-bold" style="background-color: #8B008B;">
+    PROJECTS
+  </div>
+
+  <app-add-project (projectAdded)="getAllProjects()"></app-add-project>
+  
+  <div class="bg-light border rounded-3 p-5" style="min-height: 200px;">
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table table-hover w-100">
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.project_id}} </td>
+        </ng-container>
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="Title">
+          <th mat-header-cell *matHeaderCellDef> Project Title </th>
+          <td mat-cell *matCellDef="let element"> {{element.projecttitle}} </td>
+        </ng-container>
+
+        <!-- Technology Column -->
+        <ng-container matColumnDef="Technology">
+          <th mat-header-cell *matHeaderCellDef> Technology Used </th>
+          <td mat-cell *matCellDef="let element"> {{element.techused}} </td>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="Description">
+          <th mat-header-cell *matHeaderCellDef> Description </th>
+          <td mat-cell *matCellDef="let element"> {{element.projectdescription}} </td>
+        </ng-container>
+
+        <!-- Link Column -->
+        <ng-container matColumnDef="Link">
+          <th mat-header-cell *matHeaderCellDef> Project Link </th>
+          <td mat-cell *matCellDef="let element"> {{element.project_link}} </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let element">
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-sm btn-primary d-flex align-items-center p-1" (click)="openEditModal(element)">
+                <app-update-project
+                  [projectData]="editingProject"
+                  (projectUpdated)="onProjectUpdated()"
+                ></app-update-project>
+              </button>
+              <button class="btn btn-sm btn-danger d-flex align-items-center p-1">
+                <span class="material-icons align-middle" style="font-size: 18px;">delete</span>
+              </button>
+            </div>
+            <!-- @if (editingProject && editingProject.project_id === element.project_id) {
+                
+            } -->
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>

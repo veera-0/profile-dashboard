@@ -1,0 +1,46 @@
+<span class="material-icons align-middle" style="font-size: 18px;" (click)="openModal()">edit</span>
+
+@if (showModal) {
+  <div
+    class="modal fade show"
+    tabindex="-1"
+    style="display: block; background: rgba(0,0,0,0.5);"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Update Project</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <form (ngSubmit)="updateProject()" #projectFormDirective="ngForm">
+          <div class="modal-body">
+            <!-- <div class="mb-3">
+              <label class="form-label" for="profileid">Profile ID</label>
+              <input id="profileid" type="text" class="form-control" formControlName="profile_id" [(ngModel)]="project.proje required>
+            </div> -->
+            <div class="mb-3">
+              <label class="form-label" for="projecttitle">Project Title</label>
+              <input id="projecttitle" type="text" class="form-control" [(ngModel)]="editProject.projecttitle" [ngModelOptions]="{standalone: true}" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="techused">Technology Used</label>
+              <input id="techused" type="text" class="form-control" [(ngModel)]="editProject.techused" [ngModelOptions]="{standalone: true}" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="projectdescription">Description</label>
+              <textarea id="projectdescription" class="form-control" [(ngModel)]="editProject.projectdescription" [ngModelOptions]="{standalone: true}" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="projectlink">Project Link</label>
+              <input id="projectlink" type="url" class="form-control" [(ngModel)]="editProject.project_link" [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}
