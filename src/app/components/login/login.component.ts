@@ -45,7 +45,8 @@ export class LoginComponent {
         alert('PIN login failed: ' + error.message);
       } else {
         alert('PIN login successful!');
-        this.router.navigateByUrl('/layout/profile');
+        this.router.navigateByUrl('/layout/projects');
+        sessionStorage.setItem('user', JSON.stringify(data.user));
       }
     } else {
       // Standard login
@@ -54,7 +55,8 @@ export class LoginComponent {
         alert('Login failed: ' + error.message);
       } else {
         alert('Login successful!');
-        this.router.navigateByUrl('/layout/profile');
+        this.router.navigateByUrl('/layout/projects');
+        sessionStorage.setItem('user', JSON.stringify(data.user));
       }
     }
   }
