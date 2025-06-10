@@ -9,7 +9,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (mainService.isLoggedIn$.getValue()) {
     return true;
   } else {
-    router.navigateByUrl('/login');
+    router.navigateByUrl('/');
     return false;
   }
 };
