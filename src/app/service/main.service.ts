@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 import { Education } from '../model/Education';
 import { Profile } from '../model/Profile';
 import { Project } from '../model/Project';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,10 @@ export class MainService {
   private supabase: SupabaseClient;
    _session: AuthSession | null = null
 
+  isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
+  // Optionally, store user info
+  user$ = new BehaviorSubject<any>(null);
 
   constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
@@ -41,6 +45,10 @@ export class MainService {
     return this.supabase.from('EducationData').select('*').eq('profile_id',1);
   }
 
+  addEducation(education: Education) {
+    return this.supabase.from('EducationData').insert([education]);
+  }
+
   getProfile() {
     return this.supabase.from('profileDB').select('*');
   }
@@ -62,11 +70,11 @@ export class MainService {
   }
 
   updateProject(data: Project) {
-    return this.supabase.from('projectData').update(data).eq('id', data.project_id);
+    return this.supabase.from('projectData').update(data).eq('project_id', data.project_id);
   }
 
   deleteProject(id: number) {
-    return this.supabase.from('projectData').delete().eq('id', id);
+    return this.supabase.from('projectData').delete().eq('project_id', id);
   }
 
   loginUser(email: string, password: string) {

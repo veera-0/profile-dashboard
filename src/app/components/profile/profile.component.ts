@@ -17,83 +17,20 @@ export class ProfileComponent implements OnInit {
 
   mainService = inject(MainService);
 
-  // profileData: Profile = {
-  //   id: 1,
-  //   name: 'John Doe',
-  //   password: 'password123',
-  //   email: 'john@example.com',
-  //   Profile: function (id: number, name: string, password: string, email: string): void {
-  //     // throw new Error('Function not implemented.');
-  //   }
-  // };
-
-  // profileData: Profile = new Profile(1,"veera","password123","jd");
-
-
   ngOnInit(): void {
-    // Initialization logic can go here
-    // console.log(this.mainService.getProfile()); // Log the profile data to console
-
+    this.getProfile();
   }
-  supabase: SupabaseClient = this.mainService.getSupabase();
 
-  // profilereturn: Profile = new Profile(0, '', '', '');
-  profile!: Profile;
-
-
-  // async addProfile() {
-  //   console.log('Adding profile:', this.mainService);
-  //   const { data, error } = await this.mainService.getProfile();
-  //   if(data){
-  //     this.profilereturn = data[0];
-  //     console.log('Profile fetched:', this.profilereturn);
-  //   }
-
-  //   if (error) {
-  //     console.error('Error inserting profile:', this.profileData);
-  //     alert('Error inserting profile: ' + this.profileData);
-  //   } else {
-  //     console.log('Profile inserted successfully:', data);
-  //     alert('Profile inserted successfully!');
-  //   }
-  // }
+  profile: Profile | undefined;
 
   async getProfile() {
-
-    // const { data, error } = await this.mainService.getSupabase()
-    //   .from('information_schema.tables')
-    //   .select('profileDB')
-    //   .eq('id', data.id);
-
-      // console.log('Tables in public schema:', this.supabase.schema.);
-      // debugger
-      const profile = await this.mainService.getProfile();
-// console.log('Fetched profile data:', Profile, error);
-console.log('data is: ', profile);
-
-    // console.log("data is: ",data[0].id)
-
-    // const { data, error } = await this.mainService.getProfile();
-    // console.log('Fetched profile data:', data);
-    // if(data) {
-    //   this.profilereturn = data[0];
-    //   console.log('Profile fetched:', this.profilereturn);
-    // }
-
-    // if (error) {
-    //   console.error('Error fetching profile:', error);
-    //   alert('Error fetching profile: ' + error.message);
-    // } else if (!data) {
-    //   alert('No profile found with the given ID.');
-    // } else {
-    //   if (Array.isArray(data) && data.length > 0) {
-    //     // this.profilereturn = data[0];
-    //     console.log('Profile fetched successfully:', this.profilereturn);
-    //     alert('Profile fetched successfully!');
-    //   } else {
-    //     alert('No profile found with the given ID.');
-      // }
-    // }
+    const {data,error} = await this.mainService.getProfile();
+    if (error) {
+      console.error('Error fetching profile:', error);
+    } else {
+      this.profile = data[0] as Profile;
+      console.log('Profile fetched successfully:', this.profile);
+    }
   }
 
 

@@ -1,13 +1,14 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { MainService } from './main.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  // return true; active when development is done to give access to all routes only when logged
-  const user = sessionStorage.getItem('user');
+  const mainService = inject(MainService);
   const router = inject(Router);
-  if(user != null){
+
+  if (mainService.isLoggedIn$.getValue()) {
     return true;
-  } else{
+  } else {
     router.navigateByUrl('/login');
     return false;
   }

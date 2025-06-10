@@ -3,6 +3,6 @@ export interface Education{
     profile_id: number;
     educationInfo: string;
     year: string;
-    about: string;
+    educationLevel: string;
     created_at: string;
 }

@@ -1,5 +1,48 @@
-<p>education works!</p>
+<div class="container my-4">
+  <div class="text-white rounded-3 p-4 mb-4 text-center fs-2 fw-bold" style="background-color: #8B008B;">
+    Education Data
+  </div>
 
-<button (click)="getEducation()">get Education</button>
+  <app-add-education (educationAdded)="getEducationDetails()"></app-add-education>
 
+  @if (isLoading) {
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  } @else {
+    <div class="bg-light border rounded-3 p-5" style="min-height: 200px;">
+      <div class="table-responsive">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table table-hover w-100">
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
+          </ng-container>
 
+          <!-- Level Column -->
+          <ng-container matColumnDef="educationLevel">
+            <th mat-header-cell *matHeaderCellDef> Education Level </th>
+            <td mat-cell *matCellDef="let element"> {{element.educationLevel}} </td>
+          </ng-container>
+
+          <!-- year Column -->
+          <ng-container matColumnDef="year">
+            <th mat-header-cell *matHeaderCellDef> Education Year(Start-End) </th>
+            <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+          </ng-container>
+
+          <!-- Description Column -->
+          <ng-container matColumnDef="educationInfo">
+            <th mat-header-cell *matHeaderCellDef> Education Information </th>
+            <td mat-cell *matCellDef="let element"> {{element.educationInfo}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+  }
+</div>

@@ -21,6 +21,21 @@
           class="nav-link d-flex align-items-center"
           [class.text-warning]="isMobile"
           [class.text-white]="!isMobile"
+          routerLink="/layout/profile"
+          routerLinkActive="fw-semibold text-warning"
+          (click)="isMobile ? sidenav.close() : null"
+        >
+          <span
+            class="material-icons me-2"
+            [class.text-warning]="isMobile"
+            [class.text-white]="!isMobile"
+          >account_circle</span>
+          <span class="text-white">Profile</span>
+        </a>
+        <a
+          class="nav-link d-flex align-items-center"
+          [class.text-warning]="isMobile"
+          [class.text-white]="!isMobile"
           routerLink="/layout/projects"
           routerLinkActive="fw-semibold text-warning"
           (click)="isMobile ? sidenav.close() : null"
@@ -43,6 +58,14 @@
             [class.text-white]="!isMobile"
           >school</span>
           <span class="text-white">Education</span>
+        </a>
+        <a
+          class="nav-link d-flex align-items-center"
+          style="cursor:pointer"
+          (click)="logout()"
+        >
+          <span class="material-icons me-2 text-danger">logout</span>
+          <span class="text-white">Logout</span>
         </a>
       </nav>
     </div>

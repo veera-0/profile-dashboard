@@ -1,8 +1,13 @@
 <div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
   <div class="bg-white p-5 rounded shadow w-100" style="max-width: 600px;">
+    @if (alertMessage) {
+      <div class="alert" [ngClass]="{'alert-success': alertType === 'success', 'alert-danger': alertType === 'danger'}" role="alert">
+        {{ alertMessage }}
+      </div>
+    }
     <mat-tab-group class="w-100" (selectedTabChange)="onTabChange($event)">
-      <mat-tab label="Login">
-        <h2 class="text-center mb-4 fw-bold">Login</h2>
+      <mat-tab label="Password Login">
+        <h2 class="text-center mb-4 fw-bold pt-3">Login</h2>
         <form [formGroup]="loginForm" class="w-100" (ngSubmit)="login(loginForm)">
           <div class="mb-3">
             <label class="form-label" for="email">Email</label>
@@ -35,7 +40,7 @@
         </form>
       </mat-tab>
       <mat-tab label="Login with PIN">
-        <h2 class="text-center mb-4 fw-bold">Login</h2>
+        <h2 class="text-center mb-4 fw-bold pt-3">Login</h2>
         <form [formGroup]="loginForm" class="w-100" (ngSubmit)="login(loginForm)">
           <div class="mb-3">
             <label class="form-label" for="email-pin">Email</label>

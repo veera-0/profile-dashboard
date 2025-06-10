@@ -23,40 +23,50 @@ export class LoginComponent {
     password: new FormControl('', { nonNullable: true })
   });
 
+  alertMessage: string | null = null;
+  alertType: 'success' | 'danger' | null = null;
+
   onTabChange(event: any) {
     console.log('Tab changed:', event);
     this.isPinLog = event.index === 1;
     this.loginForm.reset();
+    this.alertMessage = null;
+    this.alertType = null;
   }
 
   async login(loginData: any) {
-    console.log('form data: '+ this.loginForm.value);
     if(this.loginForm.invalid) {
-      alert('Please fill in all fields correctly.');
       return;
     }
     const { email, password } = this.loginForm.value;
 
     if (this.isPinLog) {
       // PIN login
-      console.log('', 'Logging in with PIN:', email, password);
       const { data, error } = await this.subaseService.loginWithPIN(email!, password!);
       if (error) {
-        alert('PIN login failed: ' + error.message);
+        this.alertMessage = 'PIN login failed: ' + error.message;
+        this.alertType = 'danger';
       } else {
-        alert('PIN login successful!');
-        this.router.navigateByUrl('/layout/projects');
-        sessionStorage.setItem('user', JSON.stringify(data.user));
+        this.alertMessage = 'PIN login successful!';
+        this.alertType = 'success';
+        this.subaseService.isLoggedIn$.next(true);
+        setTimeout(() => {
+          this.router.navigateByUrl('/layout/profile');
+        }, 1500);
       }
     } else {
       // Standard login
       const { data, error } = await this.subaseService.loginUser(email!, password!);
       if (error) {
-        alert('Login failed: ' + error.message);
+        this.alertMessage = 'Login failed: ' + error.message;
+        this.alertType = 'danger';
       } else {
-        alert('Login successful!');
-        this.router.navigateByUrl('/layout/projects');
-        sessionStorage.setItem('user', JSON.stringify(data.user));
+        this.alertMessage = 'Login successful!';
+        this.alertType = 'success';
+        this.subaseService.isLoggedIn$.next(true);
+        setTimeout(() => {
+          this.router.navigateByUrl('/layout/profile');
+        }, 1500);
       }
     }
   }
