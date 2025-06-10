@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
       console.error('Error fetching profile:', error);
     } else {
       this.profile = data[0] as Profile;
-      console.log('Profile fetched successfully:', this.profile);
+      console.log('Profile fetched successfully:');
     }
   }
 

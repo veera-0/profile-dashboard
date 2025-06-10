@@ -31,7 +31,7 @@ export class EducationComponent implements OnInit{
       } else {
         this.education = data as Education[];
         this.dataSource = this.education;
-        console.log('Education fetched successfully:', this.education);
+        console.log('Education fetched successfully:');
       }
       this.isLoading = false;
     });
