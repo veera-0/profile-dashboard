@@ -22,7 +22,7 @@ export class LayoutComponent {
   logout() {
     this.supabaseService.logOutUser().then(() => {
       sessionStorage.removeItem('isLoggedIn');
-      window.location.href = '/login'; 
+      window.location.href = '/'; 
     }).catch(error => {
       console.error('Logout failed:', error);
     });
