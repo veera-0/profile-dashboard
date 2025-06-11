@@ -19,9 +19,6 @@ export class MainService {
 
   isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
-  // Optionally, store user info
-  user$ = new BehaviorSubject<any>(null);
-
   constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
   }
@@ -82,7 +79,6 @@ export class MainService {
   }
 
   loginWithPIN(email: string,pin: string) {
-    console.log('Logging in with PIN:', pin);
     return this.supabase.from('profileDB')
       .select('*')
       .eq('email', email)
