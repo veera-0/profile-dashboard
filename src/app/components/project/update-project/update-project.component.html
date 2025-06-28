@@ -14,10 +14,6 @@
         </div>
         <form (ngSubmit)="updateProject()" #projectFormDirective="ngForm">
           <div class="modal-body">
-            <!-- <div class="mb-3">
-              <label class="form-label" for="profileid">Profile ID</label>
-              <input id="profileid" type="text" class="form-control" formControlName="profile_id" [(ngModel)]="project.proje required>
-            </div> -->
             <div class="mb-3">
               <label class="form-label" for="projecttitle">Project Title</label>
               <input id="projecttitle" type="text" class="form-control" [(ngModel)]="editProject.projecttitle" [ngModelOptions]="{standalone: true}" required>

@@ -54,6 +54,7 @@
                   <app-update-project
                     [projectData]="editingProject"
                     (projectUpdated)="onProjectUpdated()"
+                    (cancel)="onEditModalCancel()"
                   ></app-update-project>
                 </button>
                 <button class="btn btn-sm btn-danger d-flex align-items-center p-1">

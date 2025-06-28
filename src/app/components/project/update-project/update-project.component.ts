@@ -11,36 +11,36 @@ import { CommonModule } from '@angular/common';
   templateUrl: './update-project.component.html',
   styleUrl: './update-project.component.css'
 })
-export class UpdateProjectComponent implements OnInit{
+export class UpdateProjectComponent implements OnChanges{
 
   @Input() projectData: Project | undefined;
   @Output() projectUpdated = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
 
   showModal = false;
   supabaseService = inject(MainService);
   editProject: Project = {} as Project;
 
-  // projectForm: FormGroup = new FormGroup({
-  //   profile_id: new FormControl(1),
-  //   projecttitle: new FormControl(''),
-  //   techused: new FormControl(''),
-  //   projectdescription: new FormControl(''),
-  //   project_link: new FormControl('')
-  // });
-
   constructor() { }
-  ngOnInit(): void {
-    console.log("input data: "+this.projectData);
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['projectData']) {
+      if (this.projectData) {
+        this.editProject = { ...this.projectData };
+      } else {
+        this.editProject = {} as Project;
+      }
+    }
   }
 
-  updateProject() {
+  async updateProject() {
     if (!this.editProject || !this.editProject.project_id) return;
     this.supabaseService.updateProject(this.editProject).then(({ data, error }) => {
       if (error) {
         console.error('Error updating project:', error);
         alert('Error updating project: ' + error.message);
       } else {
-        console.log('Project updated successfully:', data);
+        console.log('Project updated successfully:');
         this.resetForm();
         this.editProject = {} as Project;
         this.showModal = false;
@@ -51,8 +51,8 @@ export class UpdateProjectComponent implements OnInit{
 
   openModal() {
     if (this.projectData) {
-      this.editProject = { ...this.projectData };
       this.showModal = true;
+      this.editProject = { ...this.projectData };
     }
   }
 
@@ -60,10 +60,11 @@ export class UpdateProjectComponent implements OnInit{
     this.editProject = {} as Project;
     this.showModal = false;
     this.projectUpdated.emit();
+    this.cancel.emit();
   }
 
   private resetForm() {
-  this.editProject = {} as Project;
-  this.showModal = false;
-}
+    this.editProject = {} as Project;
+    this.showModal = false;
+  }
 }

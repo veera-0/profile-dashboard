@@ -4,6 +4,7 @@ import { createClient, SupabaseClient,AuthChangeEvent,
   Session,
   User, } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
+import { environmentlocal } from '../../environments/environment.local';
 import { Education } from '../model/Education';
 import { Profile } from '../model/Profile';
 import { Project } from '../model/Project';
@@ -20,7 +21,11 @@ export class MainService {
   isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
   constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+    if(environment.production) {
+      this.supabase = createClient(environment.supabaseUrl(), environment.supabaseKey());
+    } else {
+      this.supabase = createClient(environmentlocal.supabaseUrl, environmentlocal.supabaseKey);
+    }
   }
 
   get session() {
@@ -72,6 +77,10 @@ export class MainService {
 
   deleteProject(id: number) {
     return this.supabase.from('projectData').delete().eq('project_id', id);
+  }
+
+  getProjectById(id: number) {
+    return this.supabase.from('projectData').select('*').eq('project_id', id).single();
   }
 
   loginUser(email: string, password: string) {

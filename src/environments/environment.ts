@@ -1,5 +1,9 @@
 export const environment = {
-  production: true,
-  supabaseUrl: '${process.env.SUPABASE_URL}',
-  supabaseKey: '${process.env.SUPABASE_ANNON_KEY}',
+  production: false,
+  get supabaseUrl() {
+    return (window as any).__env?.supabaseUrl || '';
+  },
+  get supabaseKey() {
+    return (window as any).__env?.supabaseKey || '';
+  }
 }

@@ -57,14 +57,23 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  openEditModal(project: Project) {
-    // console.log('Editing project:', project);
+  async openEditModal(project: Project) {
     this.editingProject = project;
+    const {data, error} = await this.supabaseService.getProjectById(project.profile_id);
+    if(!error && data){
+      this.editingProject = data as Project;
+    } else {
+      this.editingProject = project;
+    }
   }
 
   onProjectUpdated() {
-    this.editingProject = undefined;
     this.getAllProjects();
+    this.editingProject = undefined;
+  }
+
+  onEditModalCancel() {
+    this.editingProject = undefined;
   }
 
 }
