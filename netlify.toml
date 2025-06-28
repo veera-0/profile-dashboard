@@ -1,5 +1,5 @@
 [build]
-  command = "ng build --configuration=production"
+  command = "node env.js && ng build --configuration=production"
   publish = "dist/profile-dashboard/browser" # Change to your Angular output path if different
 
 [context.production.environment]
