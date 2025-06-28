@@ -4,8 +4,8 @@
 
 [context.production.environment]
   # These are just for documentation; actual values are set in Netlify UI
-  SUPABASE_URL = ""
-  SUPABASE_ANNON_KEY = ""
+  SUPABASE_URL = "${SUPABASE_URL}"
+  SUPABASE_ANNON_KEY = "${SUPABASE_ANNON_KEY}"
 
 [[redirects]]
   from = "/*"
