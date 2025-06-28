@@ -22,7 +22,7 @@ export class MainService {
 
   constructor() {
     if(environment.production) {
-      this.supabase = createClient(environment.supabaseUrl(), environment.supabaseKey());
+      this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
     } else {
       this.supabase = createClient(environmentlocal.supabaseUrl, environmentlocal.supabaseKey);
     }
