@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   get supabaseUrl() {
     return (window as any).__env?.supabaseUrl || '';
   },
