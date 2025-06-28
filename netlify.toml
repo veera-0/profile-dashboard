@@ -1,11 +1,7 @@
 [build]
-  command = "echo \"window.__env = { supabaseUrl: '${SUPABASE_URL}', supabaseKey: '${SUPABASE_ANNON_KEY}' };\" > src/env.js && ng build --configuration=production && cp src/env.js dist/profile-dashboard/browser"
+  command = "node env.js && ng build --configuration=production"
   publish = "dist/profile-dashboard/browser" # Change to your Angular output path if different
 
-[context.production.environment]
-  # These are just for documentation; actual values are set in Netlify UI
-  SUPABASE_URL = ""
-  SUPABASE_ANNON_KEY = ""
 
 [[redirects]]
   from = "/*"
