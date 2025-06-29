@@ -51,6 +51,10 @@ export class MainService {
     return this.supabase.from('EducationData').insert([education]);
   }
 
+  updateEducationByID(data: Education) {
+    return this.supabase.from('EducationData').update(data).eq('education_id', data.education_id);
+  }
+
   getProfile() {
     return this.supabase.from('profileDB').select('*');
   }

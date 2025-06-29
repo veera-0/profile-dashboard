@@ -1,0 +1,38 @@
+<span class="material-icons align-middle" style="font-size: 18px;" (click)="openModal()">edit</span>
+
+@if (showModal) {
+  <div
+    class="modal fade show"
+    tabindex="-1"
+    style="display: block; background: rgba(0,0,0,0.5);"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Update Project</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <form (ngSubmit)="updateEducation()" #projectFormDirective="ngForm">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label" for="projecttitle">Education Level</label>
+              <input id="level" type="text" class="form-control" [(ngModel)]="editedEducation.educationLevel" [ngModelOptions]="{standalone: true}" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="techused">Education Year</label>
+              <input id="year" type="text" class="form-control" [(ngModel)]="editedEducation.year" [ngModelOptions]="{standalone: true}" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="projectdescription">Education Information</label>
+              <textarea id="educationInfo" class="form-control" [(ngModel)]="editedEducation.educationInfo" [ngModelOptions]="{standalone: true}" required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}

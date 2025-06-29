@@ -12,13 +12,13 @@
       </div>
     </div>
   } @else {
-    <div class="bg-light border rounded-3 p-5" style="min-height: 200px;">
+    <div class="bg-light border rounded-3 p-5 p-sm-3" style="min-height: 200px;">
       <div class="table-responsive">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table table-hover w-100">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table table-hover w-100 education-table">
           <!-- Position Column -->
           <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
+            <td mat-cell *matCellDef="let element; let i = index"> {{element.education_id}} </td>
           </ng-container>
 
           <!-- Level Column -->
@@ -39,6 +39,21 @@
             <td mat-cell *matCellDef="let element"> {{element.educationInfo}} </td>
           </ng-container>
 
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-sm btn-primary d-flex align-items-center p-1" (click)="openEditModal(element)">
+                  <app-edit-education
+                    [education]="editingEducation"
+                    (educationUpdated)="onEducationUpdated()"
+                    (cancel)="onEditModalCancel()"
+                  ></app-edit-education>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
@@ -46,3 +61,4 @@
     </div>
   }
 </div>
+
