@@ -4,11 +4,9 @@
       <div class="card shadow-lg border-0 rounded-4">
         <div class="card-body p-5">
           <div class="d-flex align-items-center mb-4">
-            <img src="assets/profile-avatar.png" alt="Profile" class="rounded-circle border shadow" width="100" height="100">
+            <!-- <img src="assets/profile-avatar.png" alt="Profile" class="rounded-circle border shadow" width="100" height="100"> -->
             <div class="ms-4">
               <h2 class="fw-bold mb-1">{{ profile?.Name || 'Your Name' }}</h2>
-              <!-- <p class="text-muted mb-2">{{ profile?.title || 'Your Title / Role' }}</p> -->
-              <!-- <span class="badge bg-primary fs-6">{{ profile?.location || 'Your Location' }}</span> -->
             </div>
           </div>
           <hr>
@@ -17,29 +15,40 @@
               <h5 class="fw-semibold text-secondary">Email</h5>
               <p class="mb-0">{{ profile?.email || 'your.email@example.com' }}</p>
             </div>
-            <!-- <div class="col-md-6">
-              <h5 class="fw-semibold text-secondary">Phone</h5>
-              <p class="mb-0">{{ profile?.phone || '+1 234 567 890' }}</p>
-            </div> -->
           </div>
           <h5 class="fw-semibold text-secondary mb-2">About Me</h5>
           <p class="mb-4">{{ profile?.about || 'A short professional summary about yourself goes here. Highlight your skills, experience, and what makes you unique.' }}</p>
           <div class="d-flex gap-3">
-            <!-- @if (profile?.linkedin) {
-              <a [href]="profile.linkedin" target="_blank" class="btn btn-outline-primary btn-sm">
-                <span class="material-icons align-middle">linkedin</span> LinkedIn
-              </a>
-            } -->
-            <!-- @if (profile?.github) {
-              <a [href]="profile.github" target="_blank" class="btn btn-outline-dark btn-sm">
-                <span class="material-icons align-middle">code</span> GitHub
-              </a>
-            } -->
-            <!-- @if (profile?.website) {
-              <a [href]="profile.website" target="_blank" class="btn btn-outline-success btn-sm">
-                <span class="material-icons align-middle">public</span> Website
-              </a>
-            } -->
+            <button (click)="openAboutMeModal()" class="btn btn-primary">Update About</button>
+
+            @if (showAboutMeModal) {
+              <div
+                class="modal fade show"
+                tabindex="-1"
+                style="display: block; background: rgba(0,0,0,0.5);"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Update About me</h5>
+                      <button type="button" class="btn-close" (click)="closeAboutMeModal()" aria-label="Close"></button>
+                    </div>
+                    <form (ngSubmit)="saveAboutMe()" #projectFormDirective="ngForm">
+                      <div class="modal-body">
+                        <div class="mb-3">
+                          <label class="form-label" for="about">AboutMe</label>
+                          <textarea id="about" class="form-control" [(ngModel)]="aboutMeEdit" [ngModelOptions]="{standalone: true}" required rows="7" cols="40"></textarea>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="closeAboutMeModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            }
           </div>
         </div>
       </div>
