@@ -51,18 +51,25 @@ export class ProjectComponent implements OnInit {
       if (error) {
         console.error('Error deleting project:', error);
       } else {
-        console.log('Project deleted successfully:', data);
+        console.log('Project deleted successfully');
         this.getAllProjects();
       }
     });
   }
 
+
+
   async openEditModal(project: Project) {
     this.editingProject = project;
-    const {data, error} = await this.supabaseService.getProjectById(project.profile_id);
-    if(!error && data){
-      this.editingProject = data as Project;
+    if (project.profile_id !== undefined) {
+      const {data, error} = await this.supabaseService.getProjectById(project.profile_id);
+      if(!error && data){
+        this.editingProject = data as Project;
+      } else {
+        this.editingProject = project;
+      }
     } else {
+      console.error('Project profile_id is undefined.');
       this.editingProject = project;
     }
   }

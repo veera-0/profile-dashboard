@@ -20,12 +20,8 @@ export class MainService {
   isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
   constructor() {
-    // if(environment.production) {
-      // this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
       this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-    // } else {
-      // this.supabase = createClient(environmentlocal.supabaseUrl, environmentlocal.supabaseKey);
-    // }
+
   }
 
   get session() {
@@ -101,5 +97,29 @@ export class MainService {
 
   logOutUser(){
     return this.supabase.auth.signOut();
+  }
+
+  async uploadProjectImage(file: File): Promise<string> {
+  // Save to the 'projectimages' folder inside the 'portfoliostorage' bucket
+    const filePath = `projectimages/${Date.now()}_${file.name}`;
+    console.log('Uploading image:', filePath);
+
+
+    const { data, error } = await this.supabase.storage
+      .from('portfoliostorage')
+      .upload(filePath, file);
+
+    if (error) {
+      console.error('Image upload failed:', error);
+      alert('Image upload failed: ' + error.message);
+      return '';
+    }
+
+    // Get the public URL of the uploaded image
+    const { data: publicUrlData } = this.supabase.storage
+      .from('portfoliostorage')
+      .getPublicUrl(filePath);
+
+    return publicUrlData?.publicUrl || '';
   }
 }
