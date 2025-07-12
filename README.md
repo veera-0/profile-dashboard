@@ -1,59 +1,142 @@
-# ProfileDashboard
+# Profile Dashboard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
+A modern, responsive Angular dashboard for managing user profiles, projects, and education data, with image upload support via Supabase Storage.
 
-## Development server
+---
 
-To start a local development server, run:
+## Features
 
-```bash
-ng serve
+- **User Authentication** (email/password and PIN)
+- **Profile Management**: View and update user profile and "About Me"
+- **Project Management**:
+  - Add, edit, and delete projects
+  - Upload and preview project images (stored in Supabase Storage)
+  - Auto-removal of project images on project deletion
+- **Education Management**: Add, edit, and list education records
+- **Responsive UI**: Built with Angular Material and Bootstrap
+- **Supabase Integration**: Uses Supabase for database and storage
+
+---
+
+## Tech Stack
+
+- [Angular 17+](https://angular.io/)
+- [Supabase](https://supabase.com/) (Database, Auth, Storage)
+- [Bootstrap 5](https://getbootstrap.com/)
+- [Angular Material](https://material.angular.io/)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18+ recommended)
+- Angular CLI (`npm install -g @angular/cli`)
+- Supabase account and project
+
+### Installation
+
+1. **Clone the repository:**
+   ```sh
+   git clone <your-repo-url>
+   cd profile-dashboard
+   ```
+
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+
+3. **Configure Supabase:**
+   - Copy your Supabase project URL and anon key.
+   - Edit `src/environments/environment.ts` and `src/environments/environment.prod.ts`:
+     ```ts
+     export const environment = {
+       production: false,
+       supabaseUrl: 'https://your-project.supabase.co',
+       supabaseKey: 'your-anon-key'
+     };
+     ```
+
+4. **Run the app:**
+   ```sh
+   ng serve
+   ```
+   Visit [http://localhost:4200](http://localhost:4200).
+
+---
+
+## Project Structure
+
+```
+src/
+  app/
+    components/
+      profile/         # Profile view and edit
+      project/         # Project CRUD and image upload
+      education/       # Education CRUD
+    model/             # TypeScript interfaces
+    service/           # Supabase integration
+  environments/        # Environment configs
+  styles.css           # Global styles (Bootstrap imported)
+  index.html           # App entry point
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## Supabase Setup
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **Tables:**  
+  - `profileDB` (user profiles)
+  - `projectData` (projects, with `project_id` as PK, auto-increment)
+  - `EducationData` (education records)
 
-```bash
-ng generate component component-name
-```
+- **Storage:**  
+  - Bucket: `portfoliostorage`
+    - Folder: `projectimages/` (for project images)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- **RLS Policies:**  
+  - Enable Row Level Security on all tables.
+  - Add policies to allow authenticated users to `SELECT`, `INSERT`, `UPDATE`, and `DELETE` as needed.
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## Usage
 
-To build the project run:
+- **Login:**  
+  Use email/password or PIN (if configured).
+- **Profile:**  
+  View and update your profile and "About Me".
+- **Projects:**  
+  Add new projects, upload images, edit or delete projects. Images are previewed before upload and deleted from storage when the project is removed.
+- **Education:**  
+  Add, edit, and view education records.
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Customization
 
-## Running unit tests
+- **Styling:**  
+  Modify `styles.css` or component CSS files for custom themes.
+- **Logo/Favicon:**  
+  Replace `src/v-logo-bg.png` and update `<link rel="icon" ...>` in `index.html`.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+## Contributing
 
-## Running end-to-end tests
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
+## License
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+[MIT](LICENSE)
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Acknowledgements
+
+- [Angular](https://angular.io/)
+- [Supabase](https://supabase.com/)
