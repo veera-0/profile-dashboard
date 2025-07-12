@@ -1,5 +1,5 @@
 export interface Project {
-  project_id: number;
+  project_id?: number;
   profile_id?: number;
   projecttitle: string;
   techused: string;

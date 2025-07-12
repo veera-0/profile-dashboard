@@ -48,17 +48,15 @@ export class AddProjectComponent {
     let picture_url = '';
     if (this.selectedFile) {
       picture_url = await this.supabaseService.uploadProjectImage(this.selectedFile);
-      console.log('Uploaded image URL:', picture_url);
+      console.log('Project Image uploaded successfully');
     }
 
-    // Map form fields to Project model fields
     const project: Project = {
-      profile_id: formValue.profile_id,
+      profile_id: formValue.profile_id || 1,
       projecttitle: formValue.projecttitle,
       techused: formValue.techused,
       projectdescription: formValue.projectdescription,
       project_link: formValue.project_link,
-      project_id: formValue.project_id,
       created_at: formValue.created_at || new Date().toISOString(),
       project_ImageUrl: picture_url
     };
@@ -66,9 +64,10 @@ export class AddProjectComponent {
     this.supabaseService.insertProject(project).then(({ data, error }) => {
       this.isSubmitting = false;
       if (error) {
-        console.error('Error inserting project:', error);
-        alert('Error inserting project: ' + error.message);
+        console.error('Error inserting project:', error.message);
+        // alert('Error inserting project: ' + error.message);
       } else {
+        console.log('Project inserted successfully');
         this.projectAdded.emit();
         this.projectForm.reset();
         this.previewUrl = null;
