@@ -1,9 +1,10 @@
 export interface Project {
-  project_id: number;
-  profile_id: number;
+  project_id?: number;
+  profile_id?: number;
   projecttitle: string;
   techused: string;
   projectdescription: string;
   project_link: string;
   created_at: string;
+  project_ImageUrl?: string;
 }

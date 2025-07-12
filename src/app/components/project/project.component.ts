@@ -33,8 +33,10 @@ export class ProjectComponent implements OnInit {
       if (error) {
         console.error('Error fetching projects:', error);
       } else {
-        // console.log('Projects fetched successfully:', data);
-        const projects = (data as Project[]).sort((a, b) => a.project_id - b.project_id);
+        console.log('Projects fetched successfully:');
+        const projects = (data as Project[]).sort((a, b) =>
+          (a.project_id ?? 0) - (b.project_id ?? 0)
+        );
         this.projects = projects;
         this.dataSource = projects;
       }
@@ -47,22 +49,50 @@ export class ProjectComponent implements OnInit {
     if (!confirmed) {
       return;
     }
-    this.supabaseService.deleteProject(project.project_id).then(({ data, error }) => {
+
+    if (project.project_ImageUrl) {
+      const urlPart = '/object/public/portfoliostorage/';
+      const idx = project.project_ImageUrl.indexOf(urlPart);
+      if (idx !== -1) {
+        const filePath = project.project_ImageUrl.substring(idx + urlPart.length);
+        this.supabaseService.deleteProjectImage(filePath).then(() => {
+          this.supabaseService.deleteProject(project).then(({ data, error }) => {
+            if (error) {
+              console.error('Error deleting project:', error);
+            } else {
+              console.log('Project and image deleted successfully');
+              this.getAllProjects();
+            }
+          });
+        });
+        return;
+      }
+    }
+
+    // If no image, just delete the project
+    this.supabaseService.deleteProject(project).then(({ data, error }) => {
       if (error) {
         console.error('Error deleting project:', error);
       } else {
-        console.log('Project deleted successfully:', data);
+        console.log('Project deleted successfully');
         this.getAllProjects();
       }
     });
   }
 
+
+
   async openEditModal(project: Project) {
     this.editingProject = project;
-    const {data, error} = await this.supabaseService.getProjectById(project.profile_id);
-    if(!error && data){
-      this.editingProject = data as Project;
+    if (project.profile_id !== undefined) {
+      const {data, error} = await this.supabaseService.getProjectById(project);
+      if(!error && data){
+        this.editingProject = data as Project;
+      } else {
+        this.editingProject = project;
+      }
     } else {
+      console.error('Project profile_id is undefined.');
       this.editingProject = project;
     }
   }

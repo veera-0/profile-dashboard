@@ -15,8 +15,12 @@ export class AddProjectComponent {
   supabaseService = inject(MainService);
   @Output() projectAdded = new EventEmitter<void>();
 
+  selectedFile: File | null = null;
+  previewUrl: string | ArrayBuffer | null = null;
+  isSubmitting = false;
+
   projectForm: FormGroup = new FormGroup({
-    profile_id: new FormControl(1), 
+    profile_id: new FormControl(1),
     projecttitle: new FormControl(''),
     techused: new FormControl(''),
     projectdescription: new FormControl(''),
@@ -27,17 +31,47 @@ export class AddProjectComponent {
 
   constructor() { }
 
-  addProject(project: Project){
-    console.log('Project Form Value:', project);
-    project = this.projectForm.value;
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedFile = input.files[0];
+      const reader = new FileReader();
+      reader.onload = e => this.previewUrl = reader.result;
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+
+  async addProject(formValue: any) {
+    if (this.projectForm.invalid) return;
+    this.isSubmitting = true;
+
+    let picture_url = '';
+    if (this.selectedFile) {
+      picture_url = await this.supabaseService.uploadProjectImage(this.selectedFile);
+      console.log('Project Image uploaded successfully');
+    }
+
+    const project: Project = {
+      profile_id: formValue.profile_id || 1,
+      projecttitle: formValue.projecttitle,
+      techused: formValue.techused,
+      projectdescription: formValue.projectdescription,
+      project_link: formValue.project_link,
+      created_at: formValue.created_at || new Date().toISOString(),
+      project_ImageUrl: picture_url
+    };
+
     this.supabaseService.insertProject(project).then(({ data, error }) => {
+      this.isSubmitting = false;
       if (error) {
-        console.error('Error inserting project:', error);
-        alert('Error inserting project: ' + error.message);
+        console.error('Error inserting project:', error.message);
+        // alert('Error inserting project: ' + error.message);
       } else {
-        console.log('Project inserted successfully:', data);
+        console.log('Project inserted successfully');
         this.projectAdded.emit();
         this.projectForm.reset();
+        this.previewUrl = null;
+        this.selectedFile = null;
         this.closeModal();
       }
     });

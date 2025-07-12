@@ -20,12 +20,8 @@ export class MainService {
   isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
   constructor() {
-    // if(environment.production) {
-      // this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
       this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-    // } else {
-      // this.supabase = createClient(environmentlocal.supabaseUrl, environmentlocal.supabaseKey);
-    // }
+
   }
 
   get session() {
@@ -79,12 +75,12 @@ export class MainService {
     return this.supabase.from('projectData').update(data).eq('project_id', data.project_id);
   }
 
-  deleteProject(id: number) {
-    return this.supabase.from('projectData').delete().eq('project_id', id);
+  deleteProject(project: Project) {
+    return this.supabase.from('projectData').delete().eq('project_id', project.project_id);
   }
 
-  getProjectById(id: number) {
-    return this.supabase.from('projectData').select('*').eq('project_id', id).single();
+  getProjectById(project: Project) {
+    return this.supabase.from('projectData').select('*').eq('project_id', project.project_id).single();
   }
 
   loginUser(email: string, password: string) {
@@ -101,5 +97,37 @@ export class MainService {
 
   logOutUser(){
     return this.supabase.auth.signOut();
+  }
+
+  async uploadProjectImage(file: File): Promise<string> {
+    const filePath = `projectimages/${Date.now()}_${file.name}`;
+    console.log('Uploading image:', filePath);
+
+
+    const { data, error } = await this.supabase.storage
+      .from('portfoliostorage')
+      .upload(filePath, file);
+
+    if (error) {
+      console.error('Image upload failed:', error);
+      alert('Image upload failed: ' + error.message);
+      return '';
+    }
+
+    // Get the public URL of the uploaded image
+    const { data: publicUrlData } = this.supabase.storage
+      .from('portfoliostorage')
+      .getPublicUrl(filePath);
+
+    return publicUrlData?.publicUrl || '';
+  }
+
+  async deleteProjectImage(filePath: string): Promise<void> {
+    const { error } = await this.supabase.storage
+      .from('portfoliostorage')
+      .remove([filePath]);
+    if (error) {
+      console.error('Error deleting image from storage:', error);
+    }
   }
 }

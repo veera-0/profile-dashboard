@@ -37,8 +37,7 @@ export class UpdateProjectComponent implements OnChanges{
     if (!this.editProject || !this.editProject.project_id) return;
     this.supabaseService.updateProject(this.editProject).then(({ data, error }) => {
       if (error) {
-        console.error('Error updating project:', error);
-        alert('Error updating project: ' + error.message);
+        console.error('Error updating project:', error.message);
       } else {
         console.log('Project updated successfully:');
         this.resetForm();
