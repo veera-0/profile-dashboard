@@ -24,7 +24,7 @@ export class UpdateProjectComponent implements OnChanges{
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['projectData']) {
+    if (changes['project']) {
       if (this.projectData) {
         this.editProject = { ...this.projectData };
       } else {
