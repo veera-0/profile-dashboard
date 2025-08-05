@@ -47,7 +47,7 @@ export class AddProjectComponent {
 
     let picture_url = '';
     if (this.selectedFile) {
-      picture_url = await this.supabaseService.uploadProjectImage(this.selectedFile);
+      picture_url = await this.supabaseService.uploadProjectImage(this.selectedFile,formValue.projecttitle);
       console.log('Project Image uploaded successfully');
     }
 

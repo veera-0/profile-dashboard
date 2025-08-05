@@ -99,8 +99,8 @@ export class MainService {
     return this.supabase.auth.signOut();
   }
 
-  async uploadProjectImage(file: File): Promise<string> {
-    const filePath = `projectimages/${Date.now()}_${file.name}`;
+  async uploadProjectImage(file: File,fileName: any): Promise<string> {
+    const filePath = `projectimages/${Date.now()}_${fileName}`;
     console.log('Uploading image:', filePath);
 
 
