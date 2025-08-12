@@ -52,7 +52,7 @@ export class MainService {
   }
 
   getProfile() {
-    return this.supabase.from('profileDB').select('*');
+    return this.supabase.from('profileDB').select('id, created_at, Name, email, about');
   }
 
   updateProfile(data: Profile) {
@@ -89,7 +89,7 @@ export class MainService {
 
   loginWithPIN(email: string,pin: string) {
     return this.supabase.from('profileDB')
-      .select('*')
+      .select('id, created_at, Name, email, about')
       .eq('email', email)
       .eq('password', pin)
       .single();
