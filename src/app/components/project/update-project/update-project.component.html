@@ -27,9 +27,23 @@
               <textarea id="projectdescription" class="form-control" [(ngModel)]="editProject.projectdescription" [ngModelOptions]="{standalone: true}" required></textarea>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="projectlink">Project Link</label>
-              <input id="projectlink" type="url" class="form-control" [(ngModel)]="editProject.project_link" [ngModelOptions]="{standalone: true}">
+              <label class="form-label" for="project_link">Project Link</label>
+              <input id="project_link" type="text" class="form-control" [(ngModel)]="editProject.project_link" name="project_link" placeholder="Enter project link" required>
             </div>
+            <div class="mb-3">
+              <label class="form-label" for="projectImage">Project Image</label>
+              <input type="file" id="projectImage" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
+              @if (selectedFile) {
+                <div class="form-text mt-1">
+                  Selected file: <strong>{{ selectedFile.name }}</strong>
+                </div>
+              }
+            </div>
+            @if (previewUrl) {
+              <div class="mb-3 text-center">
+                <img [src]="previewUrl" alt="Preview" class="img-thumbnail shadow" style="max-width: 120px; max-height: 120px;" />
+              </div>
+            }
             <div class="mb-3">
               <label class="form-label" for="projectlink">Project Image URL</label>
               <input id="projectlink" type="url" class="form-control" [(ngModel)]="editProject.project_ImageUrl" [ngModelOptions]="{standalone: true}">
