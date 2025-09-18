@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
       if (error) {
         console.error('Error updating profile:', error);
       } else {
-        console.log('Profile updated successfully:', data);
+        console.log('Profile updated successfully');
       }
     } else {
       console.warn('No profile to update');
