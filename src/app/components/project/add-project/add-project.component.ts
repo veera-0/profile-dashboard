@@ -15,6 +15,7 @@ export class AddProjectComponent {
   supabaseService = inject(MainService);
   @Output() projectAdded = new EventEmitter<void>();
 
+  readonly defaultProjectImageUrl = 'https://placeholderimage.co/330x220/1e293b/38bdf8/?text=Project';
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
   isSubmitting = false;
@@ -36,7 +37,7 @@ export class AddProjectComponent {
     if (input.files && input.files[0]) {
       this.selectedFile = input.files[0];
       const reader = new FileReader();
-      reader.onload = e => this.previewUrl = reader.result;
+      reader.onload = () => this.previewUrl = reader.result;
       reader.readAsDataURL(this.selectedFile);
     }
   }
@@ -45,11 +46,13 @@ export class AddProjectComponent {
     if (this.projectForm.invalid) return;
     this.isSubmitting = true;
 
-    let picture_url = '';
+    let picture_url = this.defaultProjectImageUrl;
     if (this.selectedFile) {
-      picture_url = await this.supabaseService.uploadProjectImage(this.selectedFile,formValue.projecttitle);
+      picture_url = await this.supabaseService.uploadProjectImage(this.selectedFile, formValue.projecttitle);
       console.log('Project Image uploaded successfully');
     }
+
+    picture_url = picture_url || this.defaultProjectImageUrl;
 
     const project: Project = {
       profile_id: formValue.profile_id || 1,
