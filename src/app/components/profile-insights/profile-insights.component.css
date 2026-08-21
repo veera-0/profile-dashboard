@@ -1,0 +1,48 @@
+.insights-panel {
+  min-height: 220px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #ffffff, #f4ecff);
+  border: 1px solid rgba(139, 0, 139, 0.15);
+  border-radius: 1rem;
+  padding: 1.5rem 1.25rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(111, 66, 193, 0.08);
+}
+
+.stat-card-alt {
+  background: linear-gradient(135deg, #ffffff, #eef7ff);
+  border-color: rgba(13, 110, 253, 0.15);
+}
+
+.stat-card-soft {
+  background: linear-gradient(135deg, #fff8e7, #fffaf2);
+  border-color: rgba(255, 193, 7, 0.18);
+}
+
+.stat-card-soft-alt {
+  background: linear-gradient(135deg, #f0fff7, #f8fffb);
+  border-color: rgba(25, 135, 84, 0.15);
+}
+
+.label {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08rem;
+  color: #6c757d;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.value {
+  display: block;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.1;
+}

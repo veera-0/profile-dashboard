@@ -1,0 +1,48 @@
+
+<div class="container my-4">
+  <div class="text-white rounded-3 p-4 mb-4 text-center fs-2 fw-bold" style="background: linear-gradient(135deg, #8B008B, #6f42c1);">
+    Profile Insights
+  </div>
+
+  @if (loading) {
+    <div class="bg-light border rounded-3 p-5" style="min-height: 220px;">
+      <div class="d-flex justify-content-center align-items-center h-100">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="bg-light border rounded-3 p-4 p-sm-3 insights-panel">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="stat-card">
+            <span class="label">Downloads Today</span>
+            <span class="value">{{ getTodayCount('download') }}</span>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="stat-card stat-card-alt">
+            <span class="label">Previews Today</span>
+            <span class="value">{{ getTodayCount('preview') }}</span>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="stat-card stat-card-soft">
+            <span class="label">Total Downloads</span>
+            <span class="value">{{ downloadTotal }}</span>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="stat-card stat-card-soft-alt">
+            <span class="label">Total Previews</span>
+            <span class="value">{{ previewTotal }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
