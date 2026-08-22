@@ -74,4 +74,15 @@ export class AnalyticsServiceService {
     }
     return (data ?? []).reduce((sum, row) => sum + row.click_count, 0);
   }
+
+  async getAllData(){
+    const {data, error} = await this.mainService.getSupabase()
+      .from('button_click_counts')
+      .select('*');
+    if (error) {
+      console.error('Failed to fetch all data:', error);
+      return [];
+    }
+    return data ?? [];
+  }
 }
