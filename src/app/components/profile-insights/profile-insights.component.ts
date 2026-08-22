@@ -25,10 +25,14 @@ export class ProfileInsightsComponent {
   async loadStats(): Promise<void> {
     this.loading = true;
 
+    const button_events = await this.analyticsService.getButtonEventIDs();
+
+    console.log("The button events list: ",button_events);
+
     const [todayStats, downloadTotal, previewTotal] = await Promise.all([
-      this.analyticsService.getTodayStats(['download', 'preview']),
-      this.analyticsService.getTotal('download'),
-      this.analyticsService.getTotal('preview')
+      this.analyticsService.getTodayStats(button_events),
+      this.analyticsService.getTotal(button_events[0]),
+      this.analyticsService.getTotal(button_events[2])
     ]);
 
     this.todayStats = todayStats;

@@ -51,6 +51,17 @@ export class AnalyticsServiceService {
     return data ?? [];
   }
 
+  async getButtonEventIDs() {
+    const {data,error} = await this.mainService.getSupabase()
+      .from('button_click_counts')
+      .select('button_id');
+    if (error) {
+      console.error('Failed to fetch button event IDs:', error);
+      return [];
+    }
+    return (data ?? []).map((row: any) => row.button_id);
+  }
+
   async getTotal(buttonId: string): Promise<number> {
     const { data, error } = await this.mainService.getSupabase()
       .from('button_click_counts')
